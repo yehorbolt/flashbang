@@ -95,16 +95,16 @@ export function Flashcards({ onExit }: { onExit: () => void }) {
     const progress = ((currentIndex + 1) / filteredWords.length) * 100
 
     return (
-        <div className="container mx-auto p-4 max-w-2xl h-full flex flex-col justify-center">
-            <div className="mb-6 flex items-center justify-between">
-                <Button variant="ghost" onClick={onExit}>
+        <div className="container mx-auto p-2 sm:p-4 max-w-2xl h-full flex flex-col justify-center">
+            <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <Button className="touch-target" variant="ghost" onClick={onExit}>
                     <ArrowLeft className="mr-2 h-4 w-4" /> Exit
                 </Button>
-                <div className="flex items-center gap-4">
-                    <Badge variant="outline">
+                <div className="flex items-center gap-3 sm:gap-4">
+                    <Badge variant="outline" className="text-sm">
                         {currentIndex + 1} / {filteredWords.length}
                     </Badge>
-                    <Progress value={progress} className="w-[100px]" />
+                    <Progress value={progress} className="w-[80px] sm:w-[100px]" />
                 </div>
             </div>
 
@@ -149,8 +149,9 @@ export function Flashcards({ onExit }: { onExit: () => void }) {
                 </CardContent>
             </Card>
 
-            <div className="mt-6 flex justify-between items-center">
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
                 <Button
+                    className="touch-target"
                     variant="outline"
                     onClick={handlePrev}
                     disabled={currentIndex === 0}
@@ -158,12 +159,14 @@ export function Flashcards({ onExit }: { onExit: () => void }) {
                     <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
                 <Button
+                    className="touch-target"
                     onClick={() => setIsFlipped(!isFlipped)}
                     variant="secondary"
                 >
                     Flip Card
                 </Button>
                 <Button
+                    className="touch-target"
                     variant="outline"
                     onClick={handleNext}
                     disabled={currentIndex === filteredWords.length - 1}
@@ -173,11 +176,11 @@ export function Flashcards({ onExit }: { onExit: () => void }) {
             </div>
 
             {/* Example Sentence Section */}
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
                 {!exampleSentence ? (
                     <Button
                         variant="outline"
-                        className="w-full"
+                        className="w-full touch-target text-sm sm:text-base"
                         onClick={handleGenerateSentence}
                         disabled={isGeneratingSentence}
                     >

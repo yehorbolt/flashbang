@@ -198,10 +198,10 @@ export function Dashboard() {
     }
 
     return (
-        <div className="container mx-auto p-4 space-y-6">
-            <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold">Dashboard</h1>
-                <div className="flex gap-2">
+        <div className="container mx-auto p-2 sm:p-4 space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+                <div className="flex flex-wrap gap-2">
                     <input
                         type="file"
                         accept=".csv"
@@ -209,29 +209,30 @@ export function Dashboard() {
                         ref={fileInputRef}
                         onChange={handleImport}
                     />
-                    <Button variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isImporting}>
+                    {/* Mobile: Show fewer buttons, hide Import/Export on small screens */}
+                    <Button className="hidden sm:inline-flex" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isImporting}>
                         <Upload className="mr-2 h-4 w-4" /> Import CSV
                     </Button>
-                    <Button variant="outline" onClick={() => generateCSV(words, categories)}>
+                    <Button className="hidden sm:inline-flex" variant="outline" onClick={() => generateCSV(words, categories)}>
                         <Download className="mr-2 h-4 w-4" /> Export CSV
                     </Button>
-                    <Button variant="outline" onClick={() => handleStartConfig('flashcards')}>
-                        <Play className="mr-2 h-4 w-4" /> Start Flashcards
+                    <Button className="flex-1 sm:flex-none touch-target" variant="outline" onClick={() => handleStartConfig('flashcards')}>
+                        <Play className="mr-2 h-4 w-4" /> <span className="hidden sm:inline">Start </span>Flashcards
                     </Button>
-                    <Button onClick={() => handleStartConfig('quiz')}>
-                        <Play className="mr-2 h-4 w-4" /> Start Quiz
+                    <Button className="flex-1 sm:flex-none touch-target" onClick={() => handleStartConfig('quiz')}>
+                        <Play className="mr-2 h-4 w-4" /> <span className="hidden sm:inline">Start </span>Quiz
                     </Button>
-                    <Button variant="outline" onClick={() => setSettingsOpen(true)}>
-                        <Settings className="mr-2 h-4 w-4" /> Settings
+                    <Button className="touch-target" variant="outline" onClick={() => setSettingsOpen(true)}>
+                        <Settings className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">Settings</span>
                     </Button>
-                    <Button variant="destructive" onClick={handleLogout}>
-                        <LogOut className="mr-2 h-4 w-4" /> Log out
+                    <Button className="touch-target" variant="destructive" onClick={handleLogout}>
+                        <LogOut className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">Log out</span>
                     </Button>
                 </div>
             </div>
 
             {/* Categories */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <Card
                     className={`cursor-pointer hover:bg-accent ${currentCategoryFilter === null ? 'border-primary' : ''}`}
                     onClick={() => setCategoryFilter(null)}
@@ -316,7 +317,7 @@ export function Dashboard() {
 
             {/* Words Table */}
             <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
+                <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <CardTitle>Words</CardTitle>
                     <Dialog>
                         <DialogTrigger asChild>
@@ -390,8 +391,8 @@ export function Dashboard() {
                         </DialogContent>
                     </Dialog>
                 </CardHeader>
-                <CardContent>
-                    <Table>
+                <CardContent className="mobile-scroll">
+                    <Table className="min-w-[600px]">
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Word</TableHead>
