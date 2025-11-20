@@ -1,0 +1,40 @@
+const handleAutoFill = async () => {
+    if (!newWord.german_word.trim()) {
+        toast.error('Please enter a word first')
+        return
+    }
+    if (!apiKey || apiKey === 'your_api_key_here') {
+        toast.error('Please set a valid Gemini API Key in Settings')
+        setSettingsOpen(true)
+        return
+    }
+
+    setIsGenerating(true)
+    try {
+        const category = categories.find(c => c.id === newWord.category_id)
+        const targetLang = category?.translation_language || 'en'
+        
+        const details = await generateWordDetails(newWord.german_word, targetLang, apiKey)
+        
+        if (details) {
+            setNewWord({
+                ...newWord,
+                translation: details.translation,
+                german_spelling: details.german_spelling || ''
+            })
+            toast.success('Auto-filled successfully!')
+        } else {
+            toast.error('Failed to generate details. Check console for errors.')
+        }
+    } catch (error) {
+        console.error('Auto-fill error:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Failed to generate details'
+        toast.error(errorMessage)
+    } finally {
+        setIsGenerating(false)
+    }
+}
+
+    return (
+        <div className="container mx-auto p-4 space-y-6">
+            <div className="flex justify-between items-center">
